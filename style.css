@@ -1,6 +1,5 @@
 * {
     overflow-x: hidden;
-    color: black;
 }
 
 #wrapper {
@@ -141,6 +140,7 @@ h1 {
     border: 1px solid black;
     border-radius: 5px;
     font-family: monospace;
+    color: black;
   }
 
   .theme:hover {
@@ -172,6 +172,7 @@ h1 {
     margin-top: 28px;
     font-size: 20px;
     font-family: monospace;
+    color: black;
   }
 
   #lastOperationScreen {
