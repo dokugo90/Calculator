@@ -1,0 +1,211 @@
+* {
+    overflow-x: hidden;
+}
+
+#wrapper {
+    display: grid;
+    grid-template: 50px 50px 50px 50px 50px  / 50px 50px 50px 50px ;
+    row-gap: 10px;
+    justify-content: center;
+    margin: auto;
+    margin-top: 0px;
+    padding: 20px;
+    padding-top: 20px;
+    column-gap: 10px;
+    background-color: black;
+    border-radius: 0px 0px 15px 15px;
+    box-shadow: 5px 5px orangered;
+    
+    margin-bottom: 20px;
+}
+
+.plus {
+    height: 110px;
+    width: auto;
+    font-size: 20px;
+}
+
+#container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0px;
+}
+
+#result {
+    display: flex;
+    width: 228px;
+    text-align: center;
+    justify-content: center;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 0px;
+    height: 50px;
+    background-color: orangered;
+    border-right: 21px solid black;
+    border-left: 21px solid black;
+    border-top: 21px solid black;
+    border-radius: 15px 15px 0px 0px;
+    font-weight: bold;
+    font-family: monospace;
+    font-size: 25px;
+    overflow-y: hidden;
+    box-shadow: 5px 5px orangered;
+}
+
+.window {
+    display: flex;
+    justify-content: center;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+.number {
+    background-color: orangered;
+    border: 1px solid black;
+    border-radius: 3px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.number:hover {
+    transform: scale(1.1);
+    transition: transform 0.1s ease-in-out;
+}
+
+.number:active {
+    background-color: aqua;
+}
+
+.operator {
+    background-color: whitesmoke;
+    border: 1px solid black;
+    border-radius: 3px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.dot {
+    font-size: 19px;
+}
+
+.special {
+    background-color: aqua;
+    border-radius: 3px;
+    border: 1px solid black;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.special:hover {
+    transform: scale(1.1);
+    transition: transform 0.1s ease-in-out;
+}
+
+.operator:hover {
+    transform: scale(1.1);
+    transition: transform 0.1s ease-in-out;
+}
+
+h1 {
+    display: flex;
+    text-align: center;
+    margin-bottom: 0px;
+    color: black;
+    font-family: monospace;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 15em;
+    animation: type 4s steps(60, end);
+    justify-content: center;
+    margin: auto;
+}
+
+@keyframes type{ 
+    from { width: 0; } 
+  } 
+
+  .theme {
+    background-color: orangered;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-family: monospace;
+  }
+
+  .theme:hover {
+    background-color: aqua;
+    transition: background-color 0.3s ease-in-out;
+  }
+
+  .thm {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .inner {
+    height: 50px;
+    width: auto;
+    margin: auto;
+    font-size: 20px;
+    margin-right: 0px;
+    margin-top: 0px;
+    font-family: monospace;
+    min-height: 32px;
+  }
+
+  #currentOperationScreen {
+    display: flex;
+    justify-content: right;
+    min-height: 64px;
+    margin-top: 28px;
+    font-size: 20px;
+    font-family: monospace;
+  }
+
+  #lastOperationScreen {
+    display: flex;
+    justify-content: right;
+    text-align: right;
+    color: black;
+    
+  }
+
+  .footer {
+    text-align: center;
+    color: orangered;
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 20px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px;
+    font-size: 20px;
+    overflow-x: hidden;
+  }
+
+  .fa-github:hover {
+    transform: rotate(360deg);
+  }
+
+  .fa-github {
+    font-size: 24px;
+  transition: transform 0.3s ease-in-out;
+  left: 0px;
+  }
+
+  a {
+    color: orangered;
+  }
+
+ 
+
