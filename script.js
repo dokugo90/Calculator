@@ -2,7 +2,19 @@ let firstOperand = ''
 let secondOperand = ''
 let currentOperation = null
 let shouldResetScreen = false
+const userNameTwo = document.querySelector('.username')
+const user = document.querySelector('.btnTwo')
 
+user.addEventListener('click', () => {
+    userName.textContent = `Welcome, ${userNameTwo.value}`
+    if (userNameTwo.value.length > 15 || userNameTwo.value.length == 0) {
+      userName.textContent = `Welcome`
+    }
+    userNameTwo.classList.add('add')
+    user.classList.add('add')
+  })
+const userName = document.querySelector('.name')
+const words = document.querySelector('.wrap')
 const numberButtons = document.querySelectorAll('[data-number]')
 const operatorButtons = document.querySelectorAll('[data-operator]')
 const equalsButton = document.getElementById('equalsBtn')
@@ -19,18 +31,34 @@ deleteButton.addEventListener('click', deleteNumber)
 pointButton.addEventListener('click', appendPoint)
 
 numberButtons.forEach((button) =>
-  button.addEventListener('click', () => appendNumber(button.textContent))
+  button.addEventListener('click', () => appendNumber(button.textContent)),
 )
 
+
 operatorButtons.forEach((button) =>
-  button.addEventListener('click', () => setOperation(button.textContent))
+  button.addEventListener('click', () => setOperation(button.textContent)),
 )
 
 function appendNumber(number) {
   if (currentOperationScreen.textContent === '0' || shouldResetScreen)
     resetScreen()
   currentOperationScreen.textContent += number
+    if (currentOperationScreen.textContent.length >= 20) {
+      currentOperationScreen.textContent = '0'
+      words.style.transform = 'scale(1.3)'
+      words.style.transition = 'transform 0.3s ease-in-out'
+      words.textContent = `${userNameTwo.value}, you reached the max limit of 20 characters (Auto Reset Screen to avoid glitches)`
+      if (userNameTwo.value.length == 0 || userNameTwo.value.length > 15) {
+        words.textContent = `You reached max limit of 20 characters (Auto Reset Screen to avoid glitches)`
+      }
+  } else if (currentOperationScreen.textContent.length < 20) {
+    words.textContent = ""
+    numberButtons.forEach((button) =>
+    button.disabled = false
+    ) 
+  }
 }
+
 
 function resetScreen() {
   currentOperationScreen.textContent = ''
@@ -57,6 +85,9 @@ function deleteNumber() {
   currentOperationScreen.textContent = currentOperationScreen.textContent
     .toString()
     .slice(0, -1)
+    if (currentOperationScreen.textContent.length == 0) {
+      currentOperationScreen.textContent = '0'
+    }
 }
 
 function setOperation(operator) {
@@ -94,7 +125,7 @@ function handleKeyboardInput(e) {
   if (e.key === '=' || e.key === 'Enter') evaluate()
   if (e.key === 'Backspace') deleteNumber()
   if (e.key === 'Escape') clear()
-  if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/')
+  if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/' || e.key === '%')
     setOperation(convertOperator(e.key))
 }
 
@@ -103,6 +134,7 @@ function convertOperator(keyboardOperator) {
   if (keyboardOperator === '*') return 'x'
   if (keyboardOperator === '-') return '-'
   if (keyboardOperator === '+') return '+'
+  if (keyboardOperator === '%') return '%'
 }
 
 function add(a, b) {
@@ -201,6 +233,7 @@ white.addEventListener('click', () => {
     display.style.borderRight = '21px solid black'
     display.style.borderLeft = '21px solid black'
     display.style.borderTop = '21px solid black'
+    
 })
 
 
