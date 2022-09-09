@@ -1,239 +1,226 @@
+//Queries 
+const numbers = document.querySelectorAll(".number")
+const screen = document.querySelector(".screen")
+const final = document.querySelector(".final")
+const otherScreen = document.querySelector(".otherScreen")
+const operator = document.querySelectorAll(".operator")
+const clearBtn = document.querySelector(".clear")
+const eraseBtn = document.querySelector(".erase")
+const Calculator = document.querySelector("#button")
+const equalsBtn = document.querySelector(".equals")
+const talk = document.querySelector(".talk")
+
+//Slider
+const sliderThumb = document.querySelector(".slider-thumb")
+let body = document.body;
+
+let changed = true;
+
+function changeTheme(e) {
+    if (changed) {
+        sliderThumb.style.transform = 'translateX(41px)';
+        sliderThumb.onclick = () => (changed = false)
+        body.style.background = 'linear-gradient(to right, black 0%,black 40%,#0ef 60%, white 100%)'
+        sliderThumb.style.backgroundColor = 'white'
+        Calculator.style.backgroundColor = 'white'
+        Calculator.style.boxShadow = '0px 0px 5px 5px white'
+        final.style.backgroundColor = 'black'
+        screen.style.color = 'white'
+        talk.textContent = 'Light theme 🌞'
+        talk.style.color = 'white'
+    } if (!changed) {
+        body.style.background = 'linear-gradient(to right, white 0%,white 40%,#0ef 60%, black 100%)'
+        sliderThumb.style.transform = 'translateX(0px)'
+        sliderThumb.style.backgroundColor = 'black'
+        Calculator.style.backgroundColor = 'black'
+        final.style.backgroundColor = 'white'
+        Calculator.style.boxShadow = '0px 0px 5px 5px black'
+        screen.style.color = 'black'
+        sliderThumb.onclick = () => (changed = true)
+        talk.textContent = 'Dark Theme 🌚'
+        talk.style.color = 'black'
+    } 
+}
+
+sliderThumb.addEventListener("click", changeTheme)
+
+//Calculator 
 let firstOperand = ''
 let secondOperand = ''
 let currentOperation = null
 let shouldResetScreen = false
-const userNameTwo = document.querySelector('.username')
-const user = document.querySelector('.btnTwo')
 
-user.addEventListener('click', () => {
-    userName.textContent = `Welcome, ${userNameTwo.value}`
-    if (userNameTwo.value.length > 15 || userNameTwo.value.length == 0) {
-      userName.textContent = `Welcome`
-    }
-    userNameTwo.classList.add('add')
-    user.classList.add('add')
-  })
-const userName = document.querySelector('.name')
-const words = document.querySelector('.wrap')
-const numberButtons = document.querySelectorAll('[data-number]')
-const operatorButtons = document.querySelectorAll('[data-operator]')
-const equalsButton = document.getElementById('equalsBtn')
-const clearButton = document.getElementById('clearBtn')
-const deleteButton = document.getElementById('deleteBtn')
-const pointButton = document.getElementById('pointBtn')
-const lastOperationScreen = document.getElementById('lastOperationScreen')
-const currentOperationScreen = document.getElementById('currentOperationScreen')
 
-window.addEventListener('keydown', handleKeyboardInput)
-equalsButton.addEventListener('click', evaluate)
-clearButton.addEventListener('click', clear)
-deleteButton.addEventListener('click', deleteNumber)
-pointButton.addEventListener('click', appendPoint)
-
-numberButtons.forEach((button) =>
-  button.addEventListener('click', () => appendNumber(button.textContent)),
+numbers.forEach((button) => 
+    button.addEventListener("click", () => addToScreen(button.textContent))
 )
 
-
-operatorButtons.forEach((button) =>
-  button.addEventListener('click', () => setOperation(button.textContent)),
+operator.forEach((elem) => 
+    elem.addEventListener("click", () => setOperation(elem.textContent))
 )
 
-function appendNumber(number) {
-  if (currentOperationScreen.textContent === '0' || shouldResetScreen)
+let click = false;
+let keydown = false;
+
+document.onkeydown = () => (keydown = true)
+document.onclick = () => (click = true)
+
+function addToScreen(value) {
+  if (screen.textContent === '0' || shouldResetScreen) 
     resetScreen()
-  currentOperationScreen.textContent += number
-    if (currentOperationScreen.textContent.length >= 20) {
-      currentOperationScreen.textContent = '0'
-      words.style.transform = 'scale(1.3)'
-      words.style.transition = 'transform 0.3s ease-in-out'
-      words.textContent = `${userNameTwo.value}, you reached the max limit of 20 characters (Auto Reset Screen to avoid glitches)`
-      if (userNameTwo.value.length == 0 || userNameTwo.value.length > 15) {
-        words.textContent = `You reached max limit of 20 characters (Auto Reset Screen to avoid glitches)`
-      }
-  } else if (currentOperationScreen.textContent.length < 20) {
-    words.textContent = ""
-    numberButtons.forEach((button) =>
-    button.disabled = false
-    ) 
-  }
+  screen.textContent += value
+  setTalk()
 }
-
 
 function resetScreen() {
-  currentOperationScreen.textContent = ''
-  shouldResetScreen = false
+    screen.textContent = ''
+    shouldResetScreen = false
 }
 
-function clear() {
-  currentOperationScreen.textContent = '0'
-  lastOperationScreen.textContent = ''
-  firstOperand = ''
-  secondOperand = ''
-  currentOperation = null
+function setOperation(value) {
+  if (currentOperation !== null) evaluate();
+    firstOperand = screen.textContent;
+    currentOperation = value;
+    shouldResetScreen = true
 }
 
-function appendPoint() {
-  if (shouldResetScreen) resetScreen()
-  if (currentOperationScreen.textContent === '')
-    currentOperationScreen.textContent = '0'
-  if (currentOperationScreen.textContent.includes('.')) return
-  currentOperationScreen.textContent += '.'
-}
-
-function deleteNumber() {
-  currentOperationScreen.textContent = currentOperationScreen.textContent
-    .toString()
-    .slice(0, -1)
-    if (currentOperationScreen.textContent.length == 0) {
-      currentOperationScreen.textContent = '0'
-    }
-}
-
-function setOperation(operator) {
-  if (currentOperation !== null) evaluate()
-  firstOperand = currentOperationScreen.textContent
-  currentOperation = operator
-  
-  shouldResetScreen = true
-}
-
-function evaluate() {
-  if (currentOperation === null || shouldResetScreen) return
-  if (currentOperation === '÷' && currentOperationScreen.textContent === '0') {
-    alert("You can't divide by 0!")
-    return
-  }
-  secondOperand = currentOperationScreen.textContent
-  currentOperationScreen.textContent = roundResult(
+ function evaluate() {
+    secondOperand = screen.textContent
+    screen.textContent = roundResult(
     operate(currentOperation, firstOperand, secondOperand)
   )
 
   currentOperation = null
 }
 
-
-
+/*function convertOperator(keyboardOperator) {
+    if (keyboardOperator === '/') return '÷' 
+    if (keyboardOperator === '*') return 'x'
+    if (keyboardOperator === '-') return '-'
+    if (keyboardOperator === '+') return '+'
+    if (keyboardOperator === '%') return '%'
+  }*/
 
 function roundResult(number) {
-  return Math.round(number * 1000) / 1000
-}
-
-function handleKeyboardInput(e) {
-  if (e.key >= 0 && e.key <= 9) appendNumber(e.key)
-  if (e.key === '.') appendPoint()
-  if (e.key === '=' || e.key === 'Enter') evaluate()
-  if (e.key === 'Backspace') deleteNumber()
-  if (e.key === 'Escape') clear()
-  if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/' || e.key === '%')
-    setOperation(convertOperator(e.key))
-}
-
-function convertOperator(keyboardOperator) {
-  if (keyboardOperator === '/') return '÷'
-  if (keyboardOperator === '*') return 'x'
-  if (keyboardOperator === '-') return '-'
-  if (keyboardOperator === '+') return '+'
-  if (keyboardOperator === '%') return '%'
-}
-
-function add(a, b) {
-  return a + b
-}
-
-function substract(a, b) {
-  return a - b
-}
-
-function multiply(a, b) {
-  return a * b
-}
-
-function divide(a, b) {
-  return a / b
-}
-
-function perc(a, b) {
-    return (a / 100) * b
-}
-
-function operate(operator, a, b) {
-  a = Number(a)
-  b = Number(b)
-  switch (operator) {
-    case '+':
-      return add(a, b)
-    case '-':
-      return substract(a, b)
-    case 'x':
-      return multiply(a, b)
-    case '÷':
-      if (b === 0) return null
-      else return divide(a, b)
-    case '%':
-        return perc(a, b)
-    default:
-      return null
+    return Math.round(number * 1000) / 1000
   }
+
+  function add(a, b) {
+    return a + b
+  }
+  
+  function subtract(a, b) {
+    return a - b
+  }
+  
+  function multiply(a, b) {
+    return a * b
+  }
+  
+  function divide(a, b) {
+    return a / b
+  }
+  
+  function percent(a, b) {
+      return (a / 100) * b
+  }
+  
+  function operate(operator, a, b) {
+    a = Number(a)
+    b = Number(b)
+    switch (operator) {
+      case '+':
+        talk.textContent = `Your answer is ${a + b} 🔢`
+        return add(a, b)
+      case '-':
+        talk.textContent = `Your answer is ${a - b} 🔢`
+        return subtract(a, b)
+      case 'x':
+        talk.textContent = `Your answer is ${a * b} 🔢`
+        return multiply(a, b)
+      case '÷':
+        talk.textContent = `Your answer is ${a / b} 🔢`
+        if (b === 0) return null
+        else return divide(a, b)
+      case '%':
+        talk.textContent = `Your answer is ${(a / 100) * b} 🔢`
+          return percent(a, b)
+      default:
+        return null
+    }
+  }
+
+function clearAll() {
+  screen.textContent = '0'
+  talk.textContent = 'I don\'t like it when you delete 😔'
+    addToScreen(value)
+    firstOperand = ''
+    secondOperand = ''
+    currentOperation = null
+    shouldResetScreen = false
+    
 }
 
-const black = document.getElementById('black')
-const white = document.getElementById('white')
-const body = document.querySelector('body')
-const calc = document.querySelector('#wrapper')
-const text = document.querySelector('h1')
-const percent = document.getElementById('percent')
-const divi = document.getElementById('divi')
-const multi = document.getElementById('multi')
-const minus = document.getElementById('minus')
-const plus = document.getElementById('plus')
-const display = document.getElementById('result')
+function EraseNumber() {
+    screen.textContent = screen.textContent
+    .toString()
+    .slice(0, -1);
+    if (screen.textContent.length === 0) {
+      screen.textContent = '0'
+    }
+    setTalk()
+}
 
+function Keyboard(e) {
+    if (e.key <= 9 && e.key >= 0) {
+        addToScreen(e.key)
+    } if (e.key == 'Backspace') EraseNumber();
+    if (e.key === 'Enter' || e.key === '=') evaluate();
+    setTalk(e.key)
+    convertKeyboard(e.key)
+ } 
 
-white.disabled = true
-white.textContent = 'Active'
-white.style.backgroundColor = 'aqua'
+ function convertKeyboard(e) {
+  if (e === '+') setOperation('+');
+  if (e === '/') setOperation('÷');
+  if (e === '-') setOperation('-');
+  if (e === 'x') setOperation('x');
+  if (e === '%') setOperation('%');
+ }
 
+ let key = false;
 
-black.addEventListener('click', () => {
-    body.style.backgroundColor = 'black'
-    calc.style.backgroundColor = 'white'
-    text.style.color = 'white'
-    black.disabled = true
-    white.disabled = false
-    black.textContent = 'Active'
-    white.textContent = 'Light Theme'
-    black.style.backgroundColor = 'aqua'
-    white.style.backgroundColor = 'orangered'
-    percent.style.backgroundColor = 'darkgrey'
-    divi.style.backgroundColor = 'darkgrey'
-    multi.style.backgroundColor = 'darkgrey'
-    minus.style.backgroundColor = 'darkgrey'
-    plus.style.backgroundColor = 'darkgrey'
-    display.style.borderRight = '21px solid white'
-    display.style.borderLeft = '21px solid white'
-    display.style.borderTop = '21px solid white'
-})
+ document.onkeydown = () => (key = true)
+ document.onclick = () => (key = false)
 
-white.addEventListener('click', () => {
-    black.disabled = false
-    white.disabled = true
-    white.textContent = 'Active'
-    black.textContent = 'Dark Theme'
-    white.style.backgroundColor = 'aqua'
-    black.style.backgroundColor = 'orangered'
-    body.style.backgroundColor = 'white'
-    calc.style.backgroundColor = 'black'
-    text.style.color = 'black'
-    percent.style.backgroundColor = 'whitesmoke'
-    divi.style.backgroundColor = 'whitesmoke'
-    multi.style.backgroundColor = 'whitesmoke'
-    minus.style.backgroundColor = 'whitesmoke'
-    plus.style.backgroundColor = 'whitesmoke'
-    display.style.borderRight = '21px solid black'
-    display.style.borderLeft = '21px solid black'
-    display.style.borderTop = '21px solid black'
-    
-})
+ function setTalk(value) {
+  if (screen.textContent.length === 20) {
+    talk.textContent = `Woah ${screen.textContent.length} digits 🤯`
+  } if (screen.textContent.length < 20) {
+    talk.textContent = 'Calculate 🙂'
+  } else if (screen.textContent.length > 100) {
+    talk.textContent = ''
+  } if (screen.textContent == '0') {
+    talk.textContent = 'Hi again🙂'
+  } if (key) {
+    talk.textContent = `You pressed ${value} on your keyboard 🧑🏻‍💻​`
+    if (value == undefined) {
+      talk.textContent = 'You pressed a button'
+    }
+  } operator.forEach((button) => 
+  button.addEventListener("click", () => {
+    if (button.textContent == 'x') talk.textContent = 'times';
+    if (button.textContent == '/') talk.textContent = 'divide';
+    if (button.textContent == '+') talk.textContent = 'plus';
+    if (button.textContent == '-') talk.textContent = 'minus';
+    if (button.textContent == '%') talk.textContent = 'percent';
+  }))
+ } 
+
+equalsBtn.addEventListener("click", evaluate)
+window.addEventListener("keydown", Keyboard)
+eraseBtn.addEventListener("click", EraseNumber)
+clearBtn.addEventListener("click", clearAll)
+
 
 
