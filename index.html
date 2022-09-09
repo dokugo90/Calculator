@@ -4,70 +4,39 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Duke's Calculator</title>
+    <title>The Alive Calculator</title>
     <script src="script.js" defer></script>
-    <link href="style.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Calculator</h1>
-    <div class="thm" >
-    <button class="theme" id="black">Dark Theme</button>
-    <button class="theme" id="white">Light Theme</button>
-    </div>
-    <div class="wrap-two">
-        <input type="text" class="username" placeholder="Enter your name(Max 15 charcaters)">
-        <button type="button" class="btnTwo">Submit</button>
-    </div>
-    <div>
-        <h2 class="name"></h2>
-    </div>
-    <div>
-        <p class="wrap"></p>
-    </div>
-    <section class="window">
-        <div id="result">
-            <div class="inner" id="lastOperationScreen"></div>
-            <div class="outer" id="currentOperationScreen">0</div>
+    <div class="slider-track">
+        <div class="slider-thumb"></div>
+    </div><br>
+    <div class="talk">Hey I am Duke and I can talk 🙂</div>
+    <div id="container">
+    <div id="button">
+        <div class="final">
+            <div class="screen">0</div>
         </div>
-    </section>
-    <section id="container">
-        <div id="wrapper">
-            <button class="special" id="clearBtn">AC</button>
-            <button class="special" id="deleteBtn">C</button>
-            <button class="operator" data-operator id="percent">%</button>
-            <button class="operator divide" data-operator id="divi">÷</button>
-            <button class="number" data-number>7</button>
-            <button class="number" data-number>8</button>
-            <button class="number" data-number>9</button>
-            <button class="operator multi" data-operator id="multi">x</button>
-            <button class="number" data-number>4</button>
-            <button class="number" data-number>5</button>
-            <button class="number" data-number>6</button>
-            <button class="operator minus" data-operator id="minus">-</button>
-            <button class="number" data-number>1</button>
-            <button class="number" data-number>2</button>
-            <button class="number" data-number>3</button>
-            <button class="plus operator" data-operator id="plus">+</button>
-            <button class="number dot" id="pointBtn">.</button>
-            <button class="number" data-number>0</button>
-            <button class="number equal" id="equalsBtn">=</button>
-        </div>
-    </section>
-    <footer class="footer">
-        <p>
-          Copyright ©
-          <script>
-            document.write(new Date().getFullYear())
-          </script>
-          <div>
-          dokugo90
-        </div>
-            <a href="https://github.com/dokugo90/Calculator.git"><svg class="fa-github" style="width:25px;height:25px" viewBox="0 0 24 24">
-              <path fill="currentColor" d="M12,2A10,10 0 0,0 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12A10,10 0 0,0 12,2Z" />
-          </svg></a>
-        </p>
-        
-    </footer>
-        
-</body>
+        <button class="special erase">C</button>
+        <button class="operator percent">%</button>
+        <button class="operator divide">÷</button>
+        <button class="special clear">AC</button>
+        <button class="number">8</button>
+        <button class="number">9</button>
+        <button class="operator multiply">x</button>
+        <button class="number seven">7</button>
+        <button class="number">5</button>
+        <button class="number">6</button>
+        <button class="operator minus">-</button>
+        <button class="number four">4</button>
+        <button class="number">2</button>
+        <button class="number">3</button>
+        <button class="operator plus">+</button>
+        <button class="number one">1</button>
+        <button class="number dot">.</button>
+        <button class="number zero">0</button>
+        <button class="equals">=</button>
+    </div>
+</div>
 </html>
