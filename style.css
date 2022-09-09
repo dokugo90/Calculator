@@ -106,6 +106,7 @@ body {
 
 .operator, .special {
   border: none;
+  color: black;
 }
 
 .operator:hover, .special:hover, .number:hover {
@@ -116,6 +117,7 @@ body {
   transform: scale(1.05);
 }
 .operator {
+  color: black;
   text-align: center;
   font-size: 20px;
   background: #ededed;
@@ -124,6 +126,7 @@ body {
 }
 
 .equals {
+  color: black;
   text-align: center;
   font-size: 20px;
   background: aqua;
@@ -133,6 +136,7 @@ body {
 }
 
 .special {
+  color: black;
   text-align: center;
   background: orangered;
   border-radius: 5px;
@@ -140,6 +144,7 @@ body {
 }
 
 .number {
+  color: black;
   text-align: center;
   background: aqua;
   outline: none;
